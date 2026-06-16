@@ -1,0 +1,21 @@
+# R standard ignores
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+.Rcheck/
+
+# Package build
+*.tar.gz
+*.so
+*.dll
+
+# Data directories — do not commit downloaded or extracted data
+# (data/my_manifest.csv and data/my_sites.csv are intentionally committed)
+data/raw/
+data/extracted/
+output/
+
+# OS cruft
+.DS_Store
+Thumbs.db
