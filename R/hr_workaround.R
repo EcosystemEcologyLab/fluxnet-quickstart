@@ -10,9 +10,12 @@
 # Background: FLUXNET data is published at various temporal resolutions. Most
 # sites use half-hourly (HH, 30-minute intervals). A subset of AmeriFlux sites
 # publish at hourly (HR, 60-minute intervals) instead. The FLUXNET shuttle
-# downloads both correctly, but flux_discover_files() labels them differently
-# in the file inventory (time_resolution = "HR" vs "HH"). Without this
-# workaround, filtering for "HH" files would silently exclude HR sites.
+# downloads and extracts both correctly (a separate flux_extract() filename-
+# matching bug affecting v0.3.1 was fixed in fluxnet v0.3.2.9000). However,
+# flux_discover_files() still labels extracted HR files with time_resolution =
+# "HR" in the file inventory. Code that filters the inventory for
+# time_resolution == "HH" will silently exclude HR sites. These helper
+# functions normalize the inventory so HR sites are not dropped.
 # =============================================================================
 
 library(dplyr)
