@@ -1,21 +1,37 @@
 # =============================================================================
 # TEMPORARY UTILITY — to be absorbed into the fluxnet R package
 # =============================================================================
-# This workaround handles AmeriFlux sites that publish only hourly (HR)
-# resolution rather than half-hourly (HH). The fluxnet package will eventually
-# handle this transparently; until then, this helper exists to keep student
-# workflows running. Expect this file to be removed in a future version of
-# this template once the package update lands.
+# What this file does
+# -------------------
+# A subset of AmeriFlux sites publish sub-daily data at hourly (HR, 60-minute)
+# resolution rather than the standard half-hourly (HH, 30-minute). After
+# flux_extract() unpacks their ZIP archives, flux_discover_files() labels those
+# files with time_resolution = "HR" in the returned inventory data frame. Code
+# that filters the inventory for time_resolution == "HH" will silently exclude
+# these HR sites — no warning, no error, just missing data.
 #
-# Background: FLUXNET data is published at various temporal resolutions. Most
-# sites use half-hourly (HH, 30-minute intervals). A subset of AmeriFlux sites
-# publish at hourly (HR, 60-minute intervals) instead. The FLUXNET shuttle
-# downloads and extracts both correctly (a separate flux_extract() filename-
-# matching bug affecting v0.3.1 was fixed in fluxnet v0.3.2.9000). However,
-# flux_discover_files() still labels extracted HR files with time_resolution =
-# "HR" in the file inventory. Code that filters the inventory for
-# time_resolution == "HH" will silently exclude HR sites. These helper
-# functions normalize the inventory so HR sites are not dropped.
+# These three helper functions normalise the inventory so HR sites are included:
+#   identify_hr_sites()       — report which sites are HR
+#   normalize_hr_inventory()  — relabel "HR" → "HH" in the inventory
+#   filter_subdaily_inventory() — filter for sub-daily files including both
+#
+# The fluxnet package will eventually return a unified label for both HH and HR
+# sites. Until then, source this file and call normalize_hr_inventory() on the
+# result of flux_discover_files() before any downstream filtering.
+#
+# Historical note
+# ---------------
+# A separate, earlier HR-related bug existed in flux_extract() in fluxnet
+# v0.3.1: it matched filenames using the pattern "_HH_" (the FLUXNET-2015
+# convention) but AmeriFlux FLUXNET v1.3_r1 ships files named "_HR_", so
+# flux_extract() silently skipped the sub-daily files entirely. That bug was
+# fixed in fluxnet v0.3.2.9000 (commit 2741bb8) and is not relevant for
+# current users. A now-retired standalone workaround for that older bug
+# (bypassing flux_extract() entirely using zip::unzip()) is preserved for
+# reference at davidjpmoore/FluxCourseForecast:
+#   data/US-MMS/extract_hr_workaround.R  [RETIRED — kept for reference only]
+# Do not confuse it with this file. This file addresses only the post-extraction
+# inventory-label distinction, which remains an open issue.
 # =============================================================================
 
 library(dplyr)
