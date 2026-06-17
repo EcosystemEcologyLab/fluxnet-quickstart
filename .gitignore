@@ -19,3 +19,4 @@ output/
 # OS cruft
 .DS_Store
 Thumbs.db
+data/file_inventory.rds
