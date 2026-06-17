@@ -25,4 +25,3 @@ data/my_manifest.csv
 # OS cruft
 .DS_Store
 Thumbs.db
-data/file_inventory.rds

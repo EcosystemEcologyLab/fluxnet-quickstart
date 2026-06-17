@@ -48,3 +48,15 @@ No source() calls were added or removed — they were already correct in the com
    - `03_cite.R`: `if (!exists("generate_fluxnet_citations")) stop(...)` before `generate_fluxnet_citations(...)`
 
    These produce a targeted, actionable error message ("was not sourced — source as a whole") rather than R's generic "could not find function" message, which gives no hint about how to fix it.
+
+### Cleanup: student-friendly gitignore and maintenance-file notes
+
+**Changes (commit `b87cb58`, duplicate `.gitignore` entry cleaned in followup):**
+
+1. **`.gitignore`** — added three auto-generated example outputs to the ignore list: `data/file_inventory.rds`, `data/my_sites.csv`, and `data/my_manifest.csv`. These are regenerable artifacts that shouldn't accumulate in student forks by default. Students who want to commit a specific run for reproducibility can `git add` them explicitly to override the ignore. Removed the existing inline comment that said these files were "intentionally committed," which directly contradicted the new policy.
+
+2. **`CLAUDE.md`** — added title line (`# CLAUDE.md — fluxnet-quickstart`) and a blockquote note immediately below it explaining that this file is for canonical-repo maintenance and can be safely ignored or deleted in template forks.
+
+3. **`SESSION_LOG.md`** — added the same class of note immediately after the `# Session Log` title, for the same reason.
+
+**Rationale:** When a student forks the template, CLAUDE.md and SESSION_LOG.md are canonical-repo artifacts with no bearing on their own workflow. The notes prevent confusion without removing the institutional memory from the canonical repo. The gitignore change prevents auto-generated CSVs from accumulating in student forks as uncommitted noise, while preserving the explicit-commit escape hatch.
