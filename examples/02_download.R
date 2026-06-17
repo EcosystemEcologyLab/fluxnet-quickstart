@@ -22,6 +22,12 @@ library(fluxnet)
 library(dplyr)
 library(readr)
 
+## IMPORTANT — source this file in its entirety; do not run it line-by-line.
+## RStudio : Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac) with this file open.
+## Console : source("examples/02_download.R")
+## Stepping through line by line bypasses source() calls that load helper
+## functions, causing "could not find function" errors later in the script.
+
 if (!dir.exists("R")) stop(
   "It looks like this script is being run from the wrong directory. ",
   "Open the fluxnet-quickstart project root before running examples."
@@ -220,6 +226,10 @@ message("\n=== Discovering extracted files ===")
 inventory <- flux_discover_files("data/extracted")
 
 ## Report any HR sites found
+if (!exists("identify_hr_sites")) stop(
+  "R/hr_workaround.R was not sourced. This script must be sourced as a whole ",
+  "from the project root, not run line-by-line."
+)
 hr_sites <- identify_hr_sites(inventory)
 if (length(hr_sites) > 0) {
   message(

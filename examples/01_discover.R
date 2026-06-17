@@ -22,6 +22,11 @@ library(fluxnet)
 library(dplyr)
 library(readr)
 
+## IMPORTANT — source this file in its entirety; do not run it line-by-line.
+## RStudio : Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac) with this file open.
+## Console : source("examples/01_discover.R")
+## Stepping through line by line bypasses the working-directory check below.
+
 if (!dir.exists("R")) stop(
   "It looks like this script is being run from the wrong directory. ",
   "Open the fluxnet-quickstart project root before running examples."
