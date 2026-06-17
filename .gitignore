@@ -11,10 +11,16 @@
 *.dll
 
 # Data directories — do not commit downloaded or extracted data
-# (data/my_manifest.csv and data/my_sites.csv are intentionally committed)
 data/raw/
 data/extracted/
 output/
+
+# Auto-generated example outputs. Students who want to commit these
+# as a record of their specific run can `git add` them explicitly,
+# overriding the gitignore.
+data/file_inventory.rds
+data/my_sites.csv
+data/my_manifest.csv
 
 # OS cruft
 .DS_Store

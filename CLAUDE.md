@@ -1,3 +1,7 @@
+# CLAUDE.md — fluxnet-quickstart
+
+> **Note for template users**: This file documents how the canonical `fluxnet-quickstart` repository is maintained. If you've forked this template for your own work, you can safely ignore or delete CLAUDE.md and SESSION_LOG.md — they aren't part of the user-facing workflow.
+
 ## Working directory convention
 
 **All example scripts assume the user's working directory is the project root.** Paths like `data/raw`, `R/hr_workaround.R`, and `data/my_manifest.csv` are written relative to the root, not relative to `examples/`.
