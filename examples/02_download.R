@@ -22,6 +22,11 @@ library(fluxnet)
 library(dplyr)
 library(readr)
 
+if (!dir.exists("R")) stop(
+  "It looks like this script is being run from the wrong directory. ",
+  "Open the fluxnet-quickstart project root before running examples."
+)
+
 ## Load the HR workaround helper (handles AmeriFlux hourly vs half-hourly sites)
 source("R/hr_workaround.R")
 
