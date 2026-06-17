@@ -21,6 +21,12 @@
 ##
 ## Run this script from the root of your copy of this repository.
 
+## IMPORTANT — source this file in its entirety; do not run it line-by-line.
+## RStudio : Ctrl+Shift+Enter (Cmd+Shift+Enter on Mac) with this file open.
+## Console : source("examples/03_cite.R")
+## Stepping through line by line bypasses source() calls that load helper
+## functions, causing "could not find function" errors later in the script.
+
 if (!dir.exists("R")) stop(
   "It looks like this script is being run from the wrong directory. ",
   "Open the fluxnet-quickstart project root before running examples."
@@ -109,6 +115,10 @@ dir.create("output", showWarnings = FALSE)
 
 message("=== Generating citations for downloaded sites ===\n")
 
+if (!exists("generate_fluxnet_citations")) stop(
+  "R/generate_fluxnet_citations.R was not sourced. This script must be sourced ",
+  "as a whole from the project root, not run line-by-line."
+)
 results <- generate_fluxnet_citations(
   site_ids_csv  = "data/my_sites.csv",
   manifest_path = "data/my_manifest.csv",

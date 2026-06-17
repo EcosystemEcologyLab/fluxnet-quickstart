@@ -32,3 +32,17 @@ if (!dir.exists("R")) stop(
 No source() calls were added or removed — they were already correct in the committed files.
 
 **Lesson:** Code-review-only verification missed this class of bug. End-to-end testing is the right verification standard for any future example-script work. A script that sources correctly in isolation can still fail if library/source calls are in the wrong order, functions are unavailable at call time, or the working directory is wrong. Future changes to example scripts should be verified by sourcing the script top-to-bottom in a fresh R session from the project root.
+
+### Followup: line-by-line execution as the likely root cause
+
+**Revised diagnosis:** The original error symptom — "could not find function 'identify_hr_sites'" — is consistent with the user having stepped through the script line-by-line (e.g., sending lines to the R console one at a time in RStudio) rather than sourcing the file as a whole. The `source("R/hr_workaround.R")` call was present in the committed script; it simply was never executed. The working-directory guard added in `b8e2dc6` protects against the wrong-directory case but does not help if the user skips the source() line.
+
+**Fix applied (commit covers both files):** Two additions across `02_download.R` and `03_cite.R`, and a comment block in `01_discover.R`:
+
+1. **"Source the whole file" comment block** added just after `library()` calls in each script. Explains the correct execution method (Ctrl+Shift+Enter in RStudio, or `source()` in the console) and names the failure mode explicitly.
+
+2. **Function-existence checks** added just before the first call to each vendored helper:
+   - `02_download.R`: `if (!exists("identify_hr_sites")) stop(...)` before `identify_hr_sites(inventory)`
+   - `03_cite.R`: `if (!exists("generate_fluxnet_citations")) stop(...)` before `generate_fluxnet_citations(...)`
+
+   These produce a targeted, actionable error message ("was not sourced — source as a whole") rather than R's generic "could not find function" message, which gives no hint about how to fix it.
