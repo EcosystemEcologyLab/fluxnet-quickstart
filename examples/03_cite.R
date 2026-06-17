@@ -21,6 +21,11 @@
 ##
 ## Run this script from the root of your copy of this repository.
 
+if (!dir.exists("R")) stop(
+  "It looks like this script is being run from the wrong directory. ",
+  "Open the fluxnet-quickstart project root before running examples."
+)
+
 ## ---- Load the citation generator --------------------------------------------
 ##
 ## generate_fluxnet_citations() is a temporary standalone utility vendored in
